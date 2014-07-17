@@ -1,0 +1,14 @@
+{
+  "name": "Simple permissions",
+  "version": "0.0.1",
+  "authors": [
+    "Sergey <serge.zarouski@gmail.com>"
+  ],
+  "description": "Trivial permissions",
+  "license": "http://unlicense.org/",
+  "homepage": "https://github.com/Serge-Z/simple-permissions",
+  "private": false,
+  "dependencies": {
+    "lodash": "~2.4.1"
+  }
+}

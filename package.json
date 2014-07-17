@@ -1,0 +1,24 @@
+{
+  "name": "Simple permissions",
+  "version": "0.0.1",
+  "description": "Trivial permissions",
+  "main": "dist/permissions.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "karma start karma.conf.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Serge-Z/simple-permissions.git"
+  },
+  "author": "Sergey Zarouski",
+  "license": "http://unlicense.org/",
+  "bugs": {
+    "url": "https://github.com/Serge-Z/simple-permissions/issues"
+  },
+  "homepage": "https://github.com/Serge-Z/simple-permissions",
+  "dependencies": {
+  }
+}
