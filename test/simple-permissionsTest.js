@@ -1,7 +1,7 @@
 /*global describe, it, expect, runs, jasmine*/
 (function () {
 	'use strict';
-	define(['permissions', '_'], function (/** PermissionsExports */permissionsExport, _) {
+	define(['simple-permissions', '_'], function (/** PermissionsExports */permissionsExport, _) {
 		var grant = permissionsExport.grant,
 		    revoke = permissionsExport.revoke;
 

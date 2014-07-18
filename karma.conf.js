@@ -17,7 +17,7 @@ module.exports = function (config) {
 		// list of files / patterns to load in the browser
 		files: [
 			'test/test-main.js',
-			{pattern: 'dist/**/*.js', included: false},
+			{pattern: 'lib/**/*.js', included: false},
 			{pattern: 'vendor/**/*.js', included: false},
 			{pattern: 'test/**/*Test.js', included: false}
 		],
@@ -32,7 +32,7 @@ module.exports = function (config) {
 		// preprocess matching files before serving them to the browser
 		// available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
 		preprocessors: {
-			'**/*.js': ['coverage']
+			'!(vendor)/*.js': ['coverage']
 		},
 
 
@@ -63,7 +63,7 @@ module.exports = function (config) {
 
 		// start these browsers
 		// available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-		browsers: ['ChromeCanary', 'Chrome', 'Firefox'],
+		browsers: ['ChromeCanary', 'Chrome', 'Firefox', 'IE'],
 
 
 		// Continuous Integration mode

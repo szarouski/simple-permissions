@@ -1,10 +1,10 @@
 {
-  "name": "Simple permissions",
-  "version": "0.0.1",
+  "name": "simple-permissions",
+  "version": "1.0.0",
   "authors": [
-    "Sergey <serge.zarouski@gmail.com>"
+	  {"name": "Sergey Zarouski"}
   ],
-  "description": "Trivial permissions",
+  "description": "Trivial permissions implementation - takes an array and stores permissions from multiple targets for sources. 100% tested.",
   "license": "http://unlicense.org/",
   "homepage": "https://github.com/Serge-Z/simple-permissions",
   "private": false,

@@ -1,8 +1,8 @@
 {
-  "name": "Simple permissions",
-  "version": "0.0.1",
-  "description": "Trivial permissions",
-  "main": "dist/permissions.js",
+  "name": "simple-permissions",
+  "version": "1.0.0",
+  "description": "Trivial permissions implementation - takes an array and stores permissions from multiple targets for sources. 100% tested.",
+  "main": "lib/simple-permissions.js",
   "directories": {
     "test": "test"
   },
@@ -13,12 +13,32 @@
     "type": "git",
     "url": "git://github.com/Serge-Z/simple-permissions.git"
   },
-  "author": "Sergey Zarouski",
+  "author": {
+	  "name": "Sergey Zarouski",
+	  "homepage": "http://webuniverse.club"
+  },
   "license": "http://unlicense.org/",
   "bugs": {
     "url": "https://github.com/Serge-Z/simple-permissions/issues"
   },
   "homepage": "https://github.com/Serge-Z/simple-permissions",
   "dependencies": {
+    "lodash": "~2.4.1"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-concat": "~0.4.0",
+    "grunt-contrib-jshint": "~0.10.0",
+    "grunt-contrib-uglify": "^0.5.0",
+    "grunt-contrib-watch": "~0.6.1",
+    "grunt-karma": "^0.8.3",
+    "karma": "^0.12.17",
+    "karma-chrome-launcher": "^0.1.4",
+    "karma-coverage": "^0.2.4",
+    "karma-firefox-launcher": "^0.1.3",
+    "karma-ie-launcher": "^0.1.5",
+    "karma-jasmine": "^0.1.5",
+    "karma-requirejs": "^0.2.2",
+    "requirejs": "^2.1.14"
   }
 }
