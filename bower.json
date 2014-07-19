@@ -1,14 +1,32 @@
 {
-  "name": "simple-permissions",
-  "version": "1.0.0",
-  "authors": [
-	  {"name": "Sergey Zarouski"}
-  ],
-  "description": "Trivial permissions implementation - takes an array and stores permissions from multiple targets for sources. 100% tested.",
-  "license": "http://unlicense.org/",
-  "homepage": "https://github.com/Serge-Z/simple-permissions",
-  "private": false,
-  "dependencies": {
-    "lodash": "~2.4.1"
-  }
+	"name": "simple-permissions",
+	"description": "Trivial permissions implementation - takes an array and stores permissions from multiple targets for sources. 100% tested.",
+	"version": "1.0.0",
+	"main": "dist/simple-permissions.js",
+	"license": "http://unlicense.org/",
+	"ignore": [
+		".idea",
+		"lib",
+		"test",
+		"*.js",
+		".gitignore",
+		".bowerrc"
+	],
+	"keywords": [
+		"permissions",
+		"simple",
+		"grant",
+		"revoke"
+	],
+	"authors": [
+		{
+			"name": "Sergey Zarouski",
+			"homepage": "http://webuniverse.club"
+		}
+	],
+	"homepage": "https://github.com/Serge-Z/simple-permissions",
+	"private": false,
+	"dependencies": {
+		"lodash": "~2.4.1"
+	}
 }
