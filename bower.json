@@ -2,7 +2,6 @@
 	"name": "simple-permissions",
 	"description": "Trivial permissions implementation - takes an array and stores permissions from multiple targets for sources. 100% tested.",
 	"version": "1.0.0",
-	"main": "dist/simple-permissions.js",
 	"license": "http://unlicense.org/",
 	"ignore": [
 		".idea",
@@ -10,7 +9,8 @@
 		"test",
 		"*.js",
 		".gitignore",
-		".bowerrc"
+		".bowerrc",
+		"package.json"
 	],
 	"keywords": [
 		"permissions",
