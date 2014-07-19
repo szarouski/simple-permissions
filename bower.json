@@ -7,7 +7,7 @@
 		".idea",
 		"lib",
 		"test",
-		"*.js",
+		"./*.js",
 		".gitignore",
 		".bowerrc",
 		"package.json"
