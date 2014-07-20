@@ -1,6 +1,27 @@
 /*global describe, it, expect, runs, jasmine*/
 (function () {
 	'use strict';
+	//fallback for node testing
+	var environment = typeof window === 'object' ? 'browser' : 'node',
+		define, config, path, cwd;
+	if (environment === 'node') {
+		path = require('path');
+		config = require(path.join(__dirname, 'test-main'));
+		cwd = process.cwd();
+		define = function define(deps, cb) {
+			deps = deps.map(function (name) {
+				var module = config.paths[name];
+				if (!(name in config.paths)) {
+					module = path.join(cwd, config.projectMainFolder + name);
+				}
+				return require(module);
+			});
+			cb.apply(null, deps);
+		};
+	} else {
+		define = window.define;
+	}
+
 	define(['simple-permissions', '_'], function (/** PermissionsExports */permissionsExport, _) {
 		var grant = permissionsExport.grant,
 		    revoke = permissionsExport.revoke;
