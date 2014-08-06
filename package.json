@@ -1,6 +1,6 @@
 {
   "name": "simple-permissions",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Trivial permissions implementation - takes an array and stores permissions from multiple targets for sources. 100% tested.",
   "main": "lib/simple-permissions.js",
   "directories": {
@@ -8,11 +8,11 @@
   },
   "scripts": {
     "test": "karma start karma.conf.js",
-	"test-node": "node node_modules/jasmine-node/bin/jasmine-node --match \"test\" test"
+	"test-node": "jasmine-node --match \"test\" test"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/Serge-Z/simple-permissions.git"
+    "url": "git://github.com/szarouski/simple-permissions.git"
   },
   "author": {
     "name": "Sergey Zarouski",
@@ -20,9 +20,9 @@
   },
   "license": "http://unlicense.org/",
   "bugs": {
-    "url": "https://github.com/Serge-Z/simple-permissions/issues"
+    "url": "https://github.com/szarouski/simple-permissions/issues"
   },
-  "homepage": "https://github.com/Serge-Z/simple-permissions",
+  "homepage": "https://github.com/szarouski/simple-permissions",
   "dependencies": {
     "lodash-node": "~2.4.1"
   },

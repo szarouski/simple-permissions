@@ -1,5 +1,5 @@
-/*! simple-permissions - v1.0.0 - 2014-07-17
-* https://github.com/Serge-Z/simple-permissions
+/*! simple-permissions - v1.0.5 - 2014-08-06
+* https://github.com/szarouski/simple-permissions
  Licensed http://unlicense.org/
 * Description Trivial permissions implementation - takes an array and stores permissions from multiple targets for sources. 100% tested.
 * Author Sergey Zarouski, http://webuniverse.club
@@ -7,10 +7,11 @@
 
 (function (root, factory) {
 	'use strict';
+	var isNode = typeof window !== 'object';
 	if (typeof define === 'function' && define.amd) {
 		define(['exports', '_'], factory);
 	} else if (typeof exports === 'object') {
-		factory(exports, require('_'));
+		factory(exports, require(isNode ? 'lodash-node' : '_'));
 	} else {
 		factory((root.permissionsExports = {}), root._);
 	}

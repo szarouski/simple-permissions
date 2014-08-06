@@ -1,7 +1,6 @@
 {
 	"name": "simple-permissions",
 	"description": "Trivial permissions implementation - takes an array and stores permissions from multiple targets for sources. 100% tested.",
-	"version": "1.0.4",
 	"license": "http://unlicense.org/",
 	"ignore": [
 		".idea"
@@ -19,7 +18,7 @@
 			"homepage": "http://webuniverse.club"
 		}
 	],
-	"homepage": "https://github.com/Serge-Z/simple-permissions",
+	"homepage": "https://github.com/szarouski/simple-permissions",
 	"private": false,
 	"dependencies": {
 		"lodash": "~2.4.1"
