@@ -39,6 +39,32 @@ function revoke(storage, from, permissions) {}
 Examples:
 --------
 ```js
+//one to many
+
+var app = (function () {
+	var permissions = [];
+
+	return {
+		permissions: permissions,
+		grant: _.partial(permissionsExports.grant, permissions, 'App'),
+		revoke: _.partial(permissionsExports.revoke, permissions, 'App')
+	};
+})();
+
+app.grant({Admin: ['Read', 'Write', 'Email', 'Users'], User: ['Write', 'Read']});
+console.log(_.map(app.permissions, function (permissions) {
+	return permissions.source + ' - ' + permissions.properties.join(',')
+}));
+//["Admin - Read,Write,Email,Users", "User - Write,Read"]
+
+app.revoke({User: ['Read']});
+console.log(_.map(app.permissions, function (permissions) {
+	return permissions.source + ' - ' + permissions.properties.join(',')
+}));
+//["Admin - Read,Write,Email,Users", "User - Write"]
+```
+
+```js
 //starting code
 var Pa = {
 		name: 'Pa',
