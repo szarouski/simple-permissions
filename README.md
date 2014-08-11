@@ -1,5 +1,4 @@
-Simple Permissions
-==================
+# Simple Permissions
 Trivial permissions implementation with following features
 - Many to many permissions (if you need one to many it is very easy to write some sort of wrapper)
 - Crossbrowser/Crossplatform
@@ -12,8 +11,17 @@ License
 - http://unlicense.org/
 
 ________
-API:
---------
+##Installation:
+bower `bower install simple-permissions`  
+npm `npm install simple-permissions`
+
+##Tests:
+To launch tests make sure you have `karma-cli` installed globally and run `npm install`.  
+In browsers run `npm test` (you might want to adjust karma.conf.js). In node `npm run test-node`.
+
+If you want to contribute make sure you have `grunt-cli` installed globally and run `grunt`. Please don't include _dist_ folder in your commit.
+
+##API:
 ```js
 /**
  * @typedef {{target: String, source: String, properties: Array}} Entry
@@ -36,8 +44,7 @@ function grant(storage, to, permissions) {}
 function revoke(storage, from, permissions) {}
 ```
 
-Examples:
---------
+##Examples:
 ```js
 //one to many
 
