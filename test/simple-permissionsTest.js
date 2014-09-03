@@ -22,55 +22,55 @@
 		define = window.define;
 	}
 
-	define(['simple-permissions', '_'], function (/** PermissionsExports */permissionsExport, _) {
+	define(['simple-permissions', '_'], function (/** PermissionsExports */permissionsExport, /*_.LoDashStatic*/_) {
 		var grant = permissionsExport.grant,
 		    revoke = permissionsExport.revoke;
 
 		/**
 		 * @type {{name: string, storage: Entry[]}}
 		 */
-		var Pa = {
-				name: 'Pa',
+		var Foo = {
+				name: 'Foo',
 				storage: []
 			},
-			s = Pa.storage;
+			s = Foo.storage;
 
 		describe('test grant', function (param) {
 			it('should pass basic case', function () {
 				var str = 'whatever';
-				grant(s, Pa.name, {So: [str]});
-				var entry = _(s).find({target: Pa.name, source: 'So'});
+				grant(s, Foo.name, {Bar: [str]});
+				var entry = _.find(s, {target: Foo.name, source: 'Bar'});
 
 				expect(s.length).toBe(1);
 				expect(entry).toEqual(jasmine.any(Object));
-				expect(entry.properties[0]).toBe(str);
+				expect(entry.permissions[0]).toBe(str);
 			});
 			it('should work with multiple targets', function () {
 				var str = 'whatever';
-				grant(s, ['So', 'Do', 'Go'], {Pa: [str]});
+				grant(s, ['Bar', 'Baz', 'Qux'], {Foo: [str]});
 				var results = [
-					_(s).find({target: 'So', source: Pa.name}),
-					_(s).find({target: 'Do', source: Pa.name}),
-					_(s).find({target: 'Go', source: Pa.name})
+					_.find(s, {target: 'Bar', source: Foo.name}),
+					_.find(s, {target: 'Baz', source: Foo.name}),
+					_.find(s, {target: 'Qux', source: Foo.name})
 				];
 
 				expect(s.length).toBe(4);
 				_.each(results, function (result) {
 					expect(result).toEqual(jasmine.any(Object));
-					expect(result.properties[0]).toBe(str);
+					expect(result.permissions[0]).toBe(str);
 				});
 			});
 			it('should work with multiple permission rules', function () {
 				var str1 = 'anything';
 				var str2 = 'something else';
-				grant(s, 'So', {Pa: [str1], Do: [str2]});
-				var result1 = _(s).find({target: 'So', source: Pa.name});
-				var result2 = _(s).find({target: 'So', source: 'Do'});
+				grant(s, 'Bar', {Foo: [str1], Baz: [str2]});
+				var result1 = _.find(s, {target: 'Bar', source: Foo.name});
+				var result2 = _.find(s, {target: 'Bar', source: 'Baz'});
 
 				expect(s.length).toBe(5);
-				expect(result1.properties[1]).toBe(str1);
+				expect(result1.permissions[1]).toBe(str1);
 				expect(result2).toEqual(jasmine.any(Object));
-				expect(result2.properties[0]).toBe(str2);
+				expect(result2.permissions[0]).toBe(str2);
 			});
 		});
 
@@ -79,20 +79,20 @@
 			 * @type {{name: string, storage: Entry[]}}
 			 */
 			it('should pass basic case', function () {
-				revoke(s, 'Pa', {So: ['whatever']});
+				revoke(s, 'Foo', {Bar: ['whatever']});
 
 				expect(s.length).toBe(4);
-				expect(_(s).find({target: Pa.name, source: 'So'})).not.toBeDefined();
+				expect(_.find(s, {target: Foo.name, source: 'Bar'})).not.toBeDefined();
 			});
-            it('should work with multiple properties', function () {
-	            revoke(s, 'So', {Pa: ['anything'], Do: ['something else']});
+            it('should work with multiple permissions', function () {
+	            revoke(s, 'Bar', {Foo: ['anything'], Baz: ['something else']});
 
                 expect(s.length).toBe(3);
-	            expect(_(s).find({target: 'So', source: Pa.name}).properties[0]).toBe('whatever');
-	            expect(_(s).find({target: 'So', source: 'Do'})).not.toBeDefined();
+	            expect(_.find(s, {target: 'Bar', source: Foo.name}).permissions[0]).toBe('whatever');
+	            expect(_.find(s, {target: 'Bar', source: 'Baz'})).not.toBeDefined();
             });
             it('should work with multiple permission rules', function () {
-	            revoke(s, ['So', 'Do', 'Go'], {Pa: ['whatever']});
+	            revoke(s, ['Bar', 'Baz', 'Qux'], {Foo: ['whatever']});
 
                 expect(s.length).toBe(0);
             });

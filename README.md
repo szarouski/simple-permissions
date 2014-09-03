@@ -12,36 +12,36 @@ License
 
 ________
 ##Installation:
-bower `bower install simple-permissions`  
-npm `npm install simple-permissions`
+`bower install simple-permissions`
+`npm install simple-permissions`
 
 ##Tests:
 To launch tests make sure you have `karma-cli` installed globally and run `npm install`.  
-In browsers run `npm test` (you might want to adjust karma.conf.js). In node `npm run test-node`.
+For browsers run `npm test` (you might want to adjust karma.conf.js). For node `npm run test-node`.
 
 If you want to contribute make sure you have `grunt-cli` installed globally and run `grunt`. Please don't include _dist_ folder in your commit.
 
 ##API:
 ```js
 /**
- * @typedef {{target: String, source: String, properties: Array}} Entry
+ * @typedef {{target: String, source: String, permissions: Array}} Entry
  */
 
 /**
  * Create/append permissions in a storage
  * @param {Entry[]} storage
  * @param {String|Array} to
- * @param {Object} permissions
+ * @param {Object} permissionsMap
  */
-function grant(storage, to, permissions) {}
+function grant(storage, to, permissionsMap) {}
 
 /**
  * Reduce/Remove permissions in a storage
  * @param {Entry[]} storage
  * @param {String|Array} from
- * @param {Object} permissions
+ * @param {Object} permissionsMap
  */
-function revoke(storage, from, permissions) {}
+function revoke(storage, from, permissionsMap) {}
 ```
 
 ##Examples:
@@ -53,31 +53,31 @@ var app = (function () {
 
 	return {
 		permissions: permissions,
-		grant: _.partial(permissionsExports.grant, permissions, 'App'),
-		revoke: _.partial(permissionsExports.revoke, permissions, 'App')
+		grant: _.partial(grant, permissions, 'App'),
+		revoke: _.partial(revoke, permissions, 'App')
 	};
 })();
 
 app.grant({Admin: ['Read', 'Write', 'Email', 'Users'], User: ['Write', 'Read']});
-console.log(_.map(app.permissions, function (permissions) {
-	return permissions.source + ' - ' + permissions.properties.join(',')
+console.log(_.map(app.permissions, function (entry) {
+	return entry.source + ' - ' + entry.permissions.join(',')
 }));
 //["Admin - Read,Write,Email,Users", "User - Write,Read"]
 
 app.revoke({User: ['Read']});
-console.log(_.map(app.permissions, function (permissions) {
-	return permissions.source + ' - ' + permissions.properties.join(',')
+console.log(_.map(app.permissions, function (entry) {
+	return entry.source + ' - ' + entry.permissions.join(',')
 }));
 //["Admin - Read,Write,Email,Users", "User - Write"]
 ```
 
 ```js
 //starting code
-var Pa = {
-		name: 'Pa',
+var Foo = {
+		name: 'Foo',
 		storage: []
 	},
-	s = Pa.storage;
+	s = Foo.storage;
 
 ///////////////////
 // grant example //
@@ -85,51 +85,51 @@ var Pa = {
 
 //basic case
 var str = 'whatever';
-grant(s, Pa.name, {So: [str]});
-var entry = _(s).find({target: Pa.name, source: 'So'});
+grant(s, Foo.name, {Bar: [str]});
+var entry = _(s).find({target: Foo.name, source: 'Bar'});
 //s.length === 1;
-//entry.properties[0] === str;
+//entry.permissions[0] === str;
 
 //works with multiple targets
 var str = 'whatever';
-grant(s, ['So', 'Do', 'Go'], {Pa: [str]});
+grant(s, ['Bar', 'Baz', 'Qux'], {Foo: [str]});
 var results = [
-	_(s).find({target: 'So', source: Pa.name}),
-	_(s).find({target: 'Do', source: Pa.name}),
-	_(s).find({target: 'Go', source: Pa.name})
+	_(s).find({target: 'Bar', source: Foo.name}),
+	_(s).find({target: 'Baz', source: Foo.name}),
+	_(s).find({target: 'Qux', source: Foo.name})
 ];
 //s.length === 4;
 //_.each(results, function (result) {
-//	result.properties[0] === str;
+//	result.permissions[0] === str;
 //});
 
 //works with multiple permission rules
 var str1 = 'anything';
 var str2 = 'something else';
-grant(s, 'So', {Pa: [str1], Do: [str2]});
-var result1 = _(s).find({target: 'So', source: Pa.name});
-var result2 = _(s).find({target: 'So', source: 'Do'});
+grant(s, 'Bar', {Foo: [str1], Baz: [str2]});
+var result1 = _(s).find({target: 'Bar', source: Foo.name});
+var result2 = _(s).find({target: 'Bar', source: 'Baz'});
 //s.length === 5;
-//result1.properties[1] === str1;
-//result2.properties[0] === str2;
+//result1.permissions[1] === str1;
+//result2.permissions[0] === str2;
 
 ////////////////////
 // revoke example //
 ////////////////////
 
 //basic case
-revoke(s, 'Pa', {So: ['whatever']});
+revoke(s, 'Foo', {Bar: ['whatever']});
 //s.length === 4;
-//_(s).find({target: Pa.name, source: 'So'}) === undefined;
+//_(s).find({target: Foo.name, source: 'Bar'}) === undefined;
 
-//works with multiple properties
-revoke(s, 'So', {Pa: ['anything'], Do: ['something else']});
+//works with multiple permission rules
+revoke(s, 'Bar', {Foo: ['anything'], Baz: ['something else']});
 //s.length === 3
-//_(s).find({target: 'So', source: Pa.name}).properties[0] === 'whatever';
-//_(s).find({target: 'So', source: 'Do'}) === undefined;
+//_(s).find({target: 'Bar', source: Foo.name}).permissions[0] === 'whatever';
+//_(s).find({target: 'Bar', source: 'Baz'}) === undefined;
 
 
-// works with multiple permission rules
-revoke(s, ['So', 'Do', 'Go'], {Pa: ['whatever']});
+// works with multiple targets
+revoke(s, ['Bar', 'Baz', 'Qux'], {Foo: ['whatever']});
 //s.length === 0
 ```

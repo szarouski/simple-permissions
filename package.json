@@ -1,6 +1,6 @@
 {
   "name": "simple-permissions",
-  "version": "1.0.8",
+  "version": "2.0.0",
   "description": "Trivial permissions implementation - takes an array and stores permissions from multiple targets for sources. 100% tested.",
   "main": "lib/simple-permissions.js",
   "directories": {
@@ -8,7 +8,8 @@
   },
   "scripts": {
     "test": "karma start karma.conf.js",
-	"test-node": "jasmine-node --match \"test\" test"
+	"test-node": "jasmine-node --match \"test\" test",
+	"istanbul": "istanbul cover -v --hook-run-in-contex node_modules/jasmine-node/bin/jasmine-node -- --match \"test\" test"
   },
   "repository": {
     "type": "git",
