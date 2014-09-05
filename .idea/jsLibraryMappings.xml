@@ -3,6 +3,7 @@
   <component name="JavaScriptLibraryMappings">
     <file url="file://$PROJECT_DIR$" libraries="{permissions node_modules}" />
     <file url="file://$PROJECT_DIR$/lib/simple-permissions.js" libraries="{HTML, HTML5 / EcmaScript 5}" />
+    <file url="file://$PROJECT_DIR$/test/simple-permissionsTest.js" libraries="{Node.js Globals}" />
     <file url="PROJECT" libraries="{jasmine-DefinitelyTyped, lodash-DefinitelyTyped, requirejs-DefinitelyTyped}" />
     <excludedPredefinedLibrary name="HTML" />
     <excludedPredefinedLibrary name="HTML5 / EcmaScript 5" />

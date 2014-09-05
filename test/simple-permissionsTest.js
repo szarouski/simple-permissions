@@ -24,7 +24,7 @@
 
 	define(['simple-permissions', '_'], function (/** PermissionsExports */permissionsExport, /*_.LoDashStatic*/_) {
 		var grant = permissionsExport.grant,
-		    revoke = permissionsExport.revoke;
+			revoke = permissionsExport.revoke;
 
 		/**
 		 * @type {{name: string, storage: Entry[]}}
@@ -84,18 +84,18 @@
 				expect(s.length).toBe(4);
 				expect(_.find(s, {target: Foo.name, source: 'Bar'})).not.toBeDefined();
 			});
-            it('should work with multiple permissions', function () {
-	            revoke(s, 'Bar', {Foo: ['anything'], Baz: ['something else']});
+			it('should work with multiple permissions', function () {
+				revoke(s, 'Bar', {Foo: ['anything'], Baz: ['something else']});
 
-                expect(s.length).toBe(3);
-	            expect(_.find(s, {target: 'Bar', source: Foo.name}).permissions[0]).toBe('whatever');
-	            expect(_.find(s, {target: 'Bar', source: 'Baz'})).not.toBeDefined();
-            });
-            it('should work with multiple permission rules', function () {
-	            revoke(s, ['Bar', 'Baz', 'Qux'], {Foo: ['whatever']});
+				expect(s.length).toBe(3);
+				expect(_.find(s, {target: 'Bar', source: Foo.name}).permissions[0]).toBe('whatever');
+				expect(_.find(s, {target: 'Bar', source: 'Baz'})).not.toBeDefined();
+			});
+			it('should work with multiple permission rules', function () {
+				revoke(s, ['Bar', 'Baz', 'Qux'], {Foo: ['whatever']});
 
-                expect(s.length).toBe(0);
-            });
+				expect(s.length).toBe(0);
+			});
 		});
 	});
 }());
