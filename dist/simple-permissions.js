@@ -5,8 +5,9 @@
 * Author Sergey Zarouski, http://webuniverse.club
 */
 
-//noinspection OverlyComplexFunctionJS,JSHint,ThisExpressionReferencesGlobalObjectJS
+//noinspection OverlyComplexFunctionJS,ThisExpressionReferencesGlobalObjectJS
 (function (root, factory) {
+	//jshint maxcomplexity: false
 	'use strict';
 	var isNode = typeof window !== 'object';
 	if (typeof define === 'function' && define.amd) {
