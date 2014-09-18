@@ -1,14 +1,11 @@
-/*! simple-permissions - v2.0.0 - 2014-09-02
+/*! simple-permissions - v3.0.0 - 2014-09-17
 * https://github.com/szarouski/simple-permissions
  Licensed http://unlicense.org/
 * Description Trivial permissions implementation - takes an array and stores permissions from multiple targets for sources. 100% tested.
 * Author Sergey Zarouski, http://webuniverse.club
 */
 
-/**
- * @name PermissionsExports
- */
-
+//noinspection OverlyComplexFunctionJS,JSHint,ThisExpressionReferencesGlobalObjectJS
 (function (root, factory) {
 	'use strict';
 	var isNode = typeof window !== 'object';
@@ -17,12 +14,18 @@
 	} else if (typeof exports === 'object') {
 		factory(exports, require(isNode ? 'lodash-node' : '_'));
 	} else {
-		factory((root.permissionsExports = {}), root._);
+		//noinspection JSUnusedGlobalSymbols
+		var rootExports = root.exports || (root.exports = {});
+		factory((rootExports.permissions = {}), root._);
 	}
 }(
 	this,
 	function initSimplePermissions(/*Object*/exports, /*_.LoDashStatic*/_) {
 		'use strict';
+
+		/**
+		 * @name PermissionsExports
+		 */
 
 		/**
 		 * @param {String} target
@@ -44,25 +47,25 @@
 			/**
 			 * @param {Array} permissions
 			 */
-			addPermissions: function (permissions) {
+			addPermissions: function addEntryPermissions(permissions) {
 				this.permissions = _.union(this.permissions, permissions);
 			},
 			/**
 			 * @param {Array} permissions
 			 */
-			removePermissions: function (permissions) {
+			removePermissions: function removeEntryPermissions(permissions) {
 				this.permissions = _.difference(this.permissions, permissions);
 			},
 			/**
 			 * @param {Entry[]} storage
 			 */
-			addToStorage: function (storage) {
+			addToStorage: function addEntryToStorage(storage) {
 				storage.push(this);
 			},
 			/**
 			 * @param {Entry[]} storage
 			 */
-			removeFromStorageWhenEmpty: function (storage) {
+			removeFromStorageWhenEmpty: function removeEntryFromStorageWhenEmpty(storage) {
 				if (!this.permissions.length) {
 					var index = _.indexOf(storage, this);
 					storage.splice(index, 1);
@@ -81,7 +84,7 @@
 		function grant(storage, to, permissionsMap) {
 			to = ensureArray(to);
 
-			_.each(to, _.partial(updateEntryPermissionsUsingMap, storage, permissionsMap, addEntryOrUpdatePermissions));
+			_.each(to, _.partial(updateStorageUsingMap, storage, permissionsMap, addEntryOrUpdatePermissions));
 		}
 
 		/**
@@ -95,7 +98,7 @@
 		function revoke(storage, from, permissionsMap) {
 			from = ensureArray(from);
 
-			_.each(from, _.partial(updateEntryPermissionsUsingMap, storage, permissionsMap, removeEntryOrUpdatePermissions));
+			_.each(from, _.partial(updateStorageUsingMap, storage, permissionsMap, removeEntryOrUpdatePermissions));
 		}
 
 		/**
@@ -117,7 +120,7 @@
 		 * @param {Function} updater
 		 * @param {String} target
 		 */
-		function updateEntryPermissionsUsingMap(storage, map, updater, target) {
+		function updateStorageUsingMap(storage, map, updater, target) {
 			_.each(map, _.partial(updater, target, storage));
 		}
 
@@ -136,8 +139,7 @@
 			if (entry) {
 				entry.addPermissions(permissions);
 			} else {
-				entry = new Entry(target, source, permissions);
-				entry.addToStorage(storage);
+				new Entry(target, source, permissions).addToStorage(storage);
 			}
 		}
 
