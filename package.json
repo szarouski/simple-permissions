@@ -1,6 +1,6 @@
 {
   "name": "simple-permissions",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Trivial permissions implementation - takes an array and stores permissions from multiple targets for sources. 100% tested.",
   "main": "lib/simple-permissions.js",
   "directories": {

@@ -12,7 +12,7 @@ License
 
 ________
 ##Installation:
-`bower install simple-permissions`
+`bower install simple-permissions`  
 `npm install simple-permissions`
 
 ##Tests:
