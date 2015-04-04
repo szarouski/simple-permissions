@@ -1,4 +1,6 @@
 # Simple Permissions
+
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/szarouski/simple-permissions?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)  
 Trivial permissions implementation with following features
 - Many to many permissions (if you need one to many it is very easy to write some sort of wrapper)
 - Crossbrowser/Crossplatform
