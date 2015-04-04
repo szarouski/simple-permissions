@@ -133,3 +133,5 @@ revoke(s, 'Bar', {Foo: ['anything'], Baz: ['something else']});
 revoke(s, ['Bar', 'Baz', 'Qux'], {Foo: ['whatever']});
 //s.length === 0
 ```
+
+[![Analytics](https://ga-beacon.appspot.com/UA-61501696-1/szarouski/simple-permissions/README)](https://github.com/igrigorik/ga-beacon)

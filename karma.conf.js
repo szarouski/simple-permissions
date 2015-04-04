@@ -18,7 +18,7 @@ module.exports = function (config) {
 		files: [
 			'test/test-main.js',
 			{pattern: 'lib/**/*.js', included: false},
-			{pattern: 'vendor/**/*.js', included: false},
+			{pattern: 'bower_components/**/*.js', included: false},
 			{pattern: 'test/**/*Test.js', included: false}
 		],
 
@@ -32,7 +32,7 @@ module.exports = function (config) {
 		// preprocess matching files before serving them to the browser
 		// available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
 		preprocessors: {
-			'!(vendor)/*.js': ['coverage']
+			'!(bower_components)/*.js': ['coverage']
 		},
 
 

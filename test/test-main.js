@@ -19,7 +19,7 @@ if (environment === 'browser') {
 			}
 		}
 	}
-	paths._ = '../vendor/lodash/dist/lodash.compat';
+	paths._ = '../bower_components/lodash/lodash';
 
 	requirejs.config({
 		// Karma serves files from '/base'
@@ -34,7 +34,7 @@ if (environment === 'browser') {
 		callback: window.__karma__.start
 	});
 } else {
-	paths._ = 'lodash-node';
+	paths._ = 'lodash';
 	module.exports = {
 		projectMainFolder: projectMainFolder,
 		paths: paths
