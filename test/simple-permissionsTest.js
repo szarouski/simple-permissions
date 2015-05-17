@@ -1,4 +1,3 @@
-/*global describe, it, expect, runs, jasmine*/
 (function () {
 	'use strict';
 	//fallback for node testing
@@ -35,7 +34,7 @@
 			},
 			s = Foo.storage;
 
-		describe('test grant', function (param) {
+		describe('test grant', function () {
 			it('should pass basic case', function () {
 				var str = 'whatever';
 				grant(s, Foo.name, {Bar: [str]});
@@ -74,7 +73,7 @@
 			});
 		});
 
-		describe('test revoke', function (param) {
+		describe('test revoke', function () {
 			/**
 			 * @type {{name: string, storage: Entry[]}}
 			 */

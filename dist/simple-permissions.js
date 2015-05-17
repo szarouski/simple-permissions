@@ -1,4 +1,4 @@
-/*! simple-permissions - v4.0.0 - 2015-04-04
+/*! simple-permissions - v4.0.0 - 2015-05-17
 * https://github.com/szarouski/simple-permissions
  Licensed Unlicense
 * Description Trivial permissions implementation - takes an array and stores permissions from multiple targets for sources. 100% tested.
@@ -7,7 +7,7 @@
 
 //noinspection OverlyComplexFunctionJS,ThisExpressionReferencesGlobalObjectJS
 (function (root, factory) {
-	//jshint maxcomplexity: false
+	/*eslint complexity:6*/
 	'use strict';
 	var isNode = typeof window !== 'object';
 	if (typeof define === 'function' && define.amd) {

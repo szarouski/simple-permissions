@@ -1,6 +1,4 @@
-// Karma configuration
-// Generated on Fri Apr 11 2014 22:20:12 GMT-0400 (Eastern Daylight Time)
-//jshint strict: false
+'use strict';
 module.exports = function (config) {
 	/** @namespace config.LOG_INFO */
 	config.set({
@@ -42,7 +40,7 @@ module.exports = function (config) {
 		reporters: ['progress', 'coverage'],
 
 		//coverage reporter
-		coverageReporter: { type : 'html', dir : 'coverage/' },
+		coverageReporter: {type: 'html', dir: 'coverage/'},
 
 		// web server port
 		port: 9876,
@@ -53,7 +51,7 @@ module.exports = function (config) {
 
 
 		// level of logging
-		// possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
+		// config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
 		logLevel: config.LOG_INFO,
 
 

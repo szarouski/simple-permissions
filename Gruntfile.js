@@ -34,9 +34,9 @@ module.exports = function initGrunt(grunt) {
 				dest: 'dist/<%= pkg.name %>.min.js'
 			}
 		},
-		jshint: {
+		eslint: {
 			options: {
-				jshintrc: true
+				useEslintrc: true
 			},
 			gruntfile: {
 				src: 'Gruntfile.js'
@@ -53,17 +53,17 @@ module.exports = function initGrunt(grunt) {
 		},
 		watch: {
 			gruntfile: {
-				files: '<%= jshint.gruntfile.src %>',
-				tasks: ['jshint:gruntfile']
+				files: '<%= eslint.gruntfile.src %>',
+				tasks: ['eslint:gruntfile']
 			},
 			'lib_test': {
-				files: '<%= jshint.lib_test.src %>',
-				tasks: ['jshint:lib_test', 'karma:unit']
+				files: '<%= eslint.lib_test.src %>',
+				tasks: ['eslint:lib_test', 'karma:unit']
 			}
 		},
 		githooks: {
 			all: {
-				// Will run the jshint and test:unit tasks at every commit
+				// Will run the eslint and test:unit tasks at every commit
 				'pre-commit': 'default'
 			}
 		}
@@ -73,12 +73,12 @@ module.exports = function initGrunt(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-karma');
-	grunt.loadNpmTasks('grunt-contrib-jshint');
+	grunt.loadNpmTasks('grunt-eslint');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-githooks');
 
 	// Default task.
-	grunt.registerTask('default', ['jshint', 'karma', 'test-node', 'concat', 'uglify']);
+	grunt.registerTask('default', ['eslint', 'karma', 'test-node', 'concat', 'uglify']);
 
 	grunt.registerTask('test-node', function () {
 		var shelljs = require('shelljs');
