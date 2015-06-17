@@ -1,12 +1,12 @@
-/*! simple-permissions - v4.0.0 - 2015-05-17
+/*! simple-permissions - v4.0.1 - 2015-06-17
 * https://github.com/szarouski/simple-permissions
  Licensed Unlicense
 * Description Trivial permissions implementation - takes an array and stores permissions from multiple targets for sources. 100% tested.
 * Author Sergey Zarouski, http://webuniverse.io
 */
 
-//noinspection OverlyComplexFunctionJS,ThisExpressionReferencesGlobalObjectJS
-(function (root, factory) {
+//noinspection ThisExpressionReferencesGlobalObjectJS
+(function UMD(root, factory) {
 	/*eslint complexity:6*/
 	'use strict';
 	var isNode = typeof window !== 'object';
@@ -21,52 +21,45 @@
 	}
 }(
 	this,
-	function initSimplePermissions(/*Object*/exports, /*_.LoDashStatic*/_) {
+	function initSimplePermissions(moduleExports, /*_.LoDashStatic*/_) {
 		'use strict';
-
-		/**
-		 * @name PermissionsExports
-		 */
 
 		/**
 		 * @param {String} target
 		 * @param {String} source
-		 * @param {Array} permissions
-		 * @class Entry
+		 * @param {String[]} permissions
+		 * @class SimplePermissions
 		 */
-		function Entry(target, source, permissions) {
+		function SimplePermissions(target, source, permissions) {
 			this.target = target;
 			this.source = source;
 			this.permissions = permissions;
 		}
 
-		/**
-		 * @type {Entry.prototype}
-		 */
-		Entry.prototype = {
-			constructor: Entry,
+		SimplePermissions.prototype = {
+			constructor: SimplePermissions,
 			/**
-			 * @param {Array} permissions
+			 * @param {String[]} permissions
 			 */
-			addPermissions: function addEntryPermissions(permissions) {
+			addPermissions: function addPermissions(permissions) {
 				this.permissions = _.union(this.permissions, permissions);
 			},
 			/**
-			 * @param {Array} permissions
+			 * @param {String[]} permissions
 			 */
-			removePermissions: function removeEntryPermissions(permissions) {
+			removePermissions: function removePermissions(permissions) {
 				this.permissions = _.difference(this.permissions, permissions);
 			},
 			/**
-			 * @param {Entry[]} storage
+			 * @param {SimplePermissions[]} storage
 			 */
-			addToStorage: function addEntryToStorage(storage) {
+			addToStorage: function addToStorage(storage) {
 				storage.push(this);
 			},
 			/**
-			 * @param {Entry[]} storage
+			 * @param {SimplePermissions[]} storage
 			 */
-			removeFromStorageWhenEmpty: function removeEntryFromStorageWhenEmpty(storage) {
+			removeFromStorageWhenEmpty: function removeFromStorageWhenEmpty(storage) {
 				if (!this.permissions.length) {
 					var index = _.indexOf(storage, this);
 					storage.splice(index, 1);
@@ -75,31 +68,36 @@
 		};
 
 		/**
+		 * @class SimplePermissions.Exports
+		 */
+		var exports = moduleExports;
+		exports.grant = grant;
+		exports.revoke = revoke;
+
+		/**
 		 * Create/append permissions in a storage
-		 * @name PermissionsExports#grant
-		 * @propertyOf PermissionsExports
-		 * @param {Entry[]} storage
+		 * @name SimplePermissions.Exports#grant
+		 * @param {SimplePermissions[]} storage
 		 * @param {String|Array} to
 		 * @param {Object} permissionsMap
 		 */
 		function grant(storage, to, permissionsMap) {
 			to = ensureArray(to);
 
-			_.each(to, _.partial(updateStorageUsingMap, storage, permissionsMap, addEntryOrUpdatePermissions));
+			_.each(to, _.partial(updateStorageUsingMap, storage, permissionsMap, addOrUpdatePermissions));
 		}
 
 		/**
 		 * Reduce/Remove permissions in a storage
-		 * @name PermissionsExports#revoke
-		 * @propertyOf PermissionsExports
-		 * @param {Entry[]} storage
+		 * @name SimplePermissions.Exports#revoke
+		 * @param {SimplePermissions[]} storage
 		 * @param {String|Array} from
 		 * @param {Object} permissionsMap
 		 */
 		function revoke(storage, from, permissionsMap) {
 			from = ensureArray(from);
 
-			_.each(from, _.partial(updateStorageUsingMap, storage, permissionsMap, removeEntryOrUpdatePermissions));
+			_.each(from, _.partial(updateStorageUsingMap, storage, permissionsMap, removeOrUpdatePermissions));
 		}
 
 		/**
@@ -115,8 +113,8 @@
 		}
 
 		/**
-		 * to update permissions go over permissions map and update target's storage Entry
-		 * @param {Entry[]} storage
+		 * to update permissions go over permissions map and update target's storage SimplePermissions
+		 * @param {SimplePermissions[]} storage
 		 * @param {Object} map
 		 * @param {Function} updater
 		 * @param {String} target
@@ -128,30 +126,30 @@
 		/**
 		 * to add permissions check if existing entry found and update permissions, otherwise add new entry
 		 * @param {String} target
-		 * @param {Entry[]} storage
+		 * @param {SimplePermissions[]} storage
 		 * @param {Array} permissions
 		 * @param {String} source
 		 */
-		function addEntryOrUpdatePermissions(target, storage, permissions, source) {
+		function addOrUpdatePermissions(target, storage, permissions, source) {
 			/**
-			 * @type {Entry}
+			 * @type {SimplePermissions}
 			 */
 			var entry = _.find(storage, {target: target, source: source});
 			if (entry) {
 				entry.addPermissions(permissions);
 			} else {
-				new Entry(target, source, permissions).addToStorage(storage);
+				new SimplePermissions(target, source, permissions).addToStorage(storage);
 			}
 		}
 
 		/**
 		 * private method which handles removals
 		 * @param {String} target
-		 * @param {Entry[]} storage
+		 * @param {SimplePermissions[]} storage
 		 * @param {Array} permissions
 		 * @param {String} source
 		 */
-		function removeEntryOrUpdatePermissions(target, storage, permissions, source) {
+		function removeOrUpdatePermissions(target, storage, permissions, source) {
 			//remove when no permissions left
 
 			var entry = _.find(storage, {target: target, source: source});
@@ -160,13 +158,5 @@
 				entry.removeFromStorageWhenEmpty(storage);
 			}
 		}
-
-		_.extend(
-			exports,
-			{
-				grant: grant,
-				revoke: revoke
-			}
-		);
 	}
 ));
