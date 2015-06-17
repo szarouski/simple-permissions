@@ -31,12 +31,12 @@ Please don't include _dist_ folder in your commit.
 
 ```js
 /**
- * @typedef {{target: String, source: String, permissions: Array}} Entry
+ * @typedef {{target: String, source: String, permissions: Array}} SimplePermissions
  */
 
 /**
  * Create/append permissions in a storage
- * @param {Entry[]} storage
+ * @param {SimplePermissions[]} storage
  * @param {String|Array} to
  * @param {Object} permissionsMap
  */
@@ -44,7 +44,7 @@ function grant(storage, to, permissionsMap) {}
 
 /**
  * Reduce/Remove permissions in a storage
- * @param {Entry[]} storage
+ * @param {SimplePermissions[]} storage
  * @param {String|Array} from
  * @param {Object} permissionsMap
  */
@@ -72,11 +72,11 @@ console.log(_.map(app.permissions, function (entry) {
 }));
 //["Admin - Read,Write,Email,Users", "User - Write,Read"]
 
-app.revoke({User: ['Read']});
+app.revoke({User: ['Write']});
 console.log(_.map(app.permissions, function (entry) {
 	return entry.source + ' - ' + entry.permissions.join(',')
 }));
-//["Admin - Read,Write,Email,Users", "User - Write"]
+//["Admin - Read,Write,Email,Users", "User - Read"]
 ```
 
 ```js

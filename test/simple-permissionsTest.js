@@ -21,80 +21,80 @@
 		define = window.define;
 	}
 
-	define(['simple-permissions', '_'], function (/** PermissionsExports */permissionsExport, /*_.LoDashStatic*/_) {
-		var grant = permissionsExport.grant,
-			revoke = permissionsExport.revoke;
+	define(
+		['simple-permissions', '_'],
+		function (/**SimplePermissions.Exports */permissionsExport, /*_.LoDashStatic*/_) {
+			/**
+			 * @type {{name: string, storage: SimplePermissions[]}}
+			 */
+			var Foo = {
+					name: 'Foo',
+					storage: []
+				},
+				s = Foo.storage;
 
-		/**
-		 * @type {{name: string, storage: Entry[]}}
-		 */
-		var Foo = {
-				name: 'Foo',
-				storage: []
-			},
-			s = Foo.storage;
+			describe('test grant', function () {
+				it('should pass basic case', function () {
+					var str = 'whatever';
+					permissionsExport.grant(s, Foo.name, {Bar: [str]});
+					var entry = _.find(s, {target: Foo.name, source: 'Bar'});
 
-		describe('test grant', function () {
-			it('should pass basic case', function () {
-				var str = 'whatever';
-				grant(s, Foo.name, {Bar: [str]});
-				var entry = _.find(s, {target: Foo.name, source: 'Bar'});
+					expect(s.length).toBe(1);
+					expect(entry).toEqual(jasmine.any(Object));
+					expect(entry.permissions[0]).toBe(str);
+				});
+				it('should work with multiple targets', function () {
+					var str = 'whatever';
+					permissionsExport.grant(s, ['Bar', 'Baz', 'Qux'], {Foo: [str]});
+					var results = [
+						_.find(s, {target: 'Bar', source: Foo.name}),
+						_.find(s, {target: 'Baz', source: Foo.name}),
+						_.find(s, {target: 'Qux', source: Foo.name})
+					];
 
-				expect(s.length).toBe(1);
-				expect(entry).toEqual(jasmine.any(Object));
-				expect(entry.permissions[0]).toBe(str);
-			});
-			it('should work with multiple targets', function () {
-				var str = 'whatever';
-				grant(s, ['Bar', 'Baz', 'Qux'], {Foo: [str]});
-				var results = [
-					_.find(s, {target: 'Bar', source: Foo.name}),
-					_.find(s, {target: 'Baz', source: Foo.name}),
-					_.find(s, {target: 'Qux', source: Foo.name})
-				];
+					expect(s.length).toBe(4);
+					_.each(results, function (result) {
+						expect(result).toEqual(jasmine.any(Object));
+						expect(result.permissions[0]).toBe(str);
+					});
+				});
+				it('should work with multiple permission rules', function () {
+					var str1 = 'anything';
+					var str2 = 'something else';
+					permissionsExport.grant(s, 'Bar', {Foo: [str1], Baz: [str2]});
+					var result1 = _.find(s, {target: 'Bar', source: Foo.name});
+					var result2 = _.find(s, {target: 'Bar', source: 'Baz'});
 
-				expect(s.length).toBe(4);
-				_.each(results, function (result) {
-					expect(result).toEqual(jasmine.any(Object));
-					expect(result.permissions[0]).toBe(str);
+					expect(s.length).toBe(5);
+					expect(result1.permissions[1]).toBe(str1);
+					expect(result2).toEqual(jasmine.any(Object));
+					expect(result2.permissions[0]).toBe(str2);
 				});
 			});
-			it('should work with multiple permission rules', function () {
-				var str1 = 'anything';
-				var str2 = 'something else';
-				grant(s, 'Bar', {Foo: [str1], Baz: [str2]});
-				var result1 = _.find(s, {target: 'Bar', source: Foo.name});
-				var result2 = _.find(s, {target: 'Bar', source: 'Baz'});
 
-				expect(s.length).toBe(5);
-				expect(result1.permissions[1]).toBe(str1);
-				expect(result2).toEqual(jasmine.any(Object));
-				expect(result2.permissions[0]).toBe(str2);
+			describe('test revoke', function () {
+				/**
+				 * @type {{name: string, storage: SimplePermissions[]}}
+				 */
+				it('should pass basic case', function () {
+					permissionsExport.revoke(s, 'Foo', {Bar: ['whatever']});
+
+					expect(s.length).toBe(4);
+					expect(_.find(s, {target: Foo.name, source: 'Bar'})).not.toBeDefined();
+				});
+				it('should work with multiple permissions', function () {
+					permissionsExport.revoke(s, 'Bar', {Foo: ['anything'], Baz: ['something else']});
+
+					expect(s.length).toBe(3);
+					expect(_.find(s, {target: 'Bar', source: Foo.name}).permissions[0]).toBe('whatever');
+					expect(_.find(s, {target: 'Bar', source: 'Baz'})).not.toBeDefined();
+				});
+				it('should work with multiple permission rules', function () {
+					permissionsExport.revoke(s, ['Bar', 'Baz', 'Qux'], {Foo: ['whatever']});
+
+					expect(s.length).toBe(0);
+				});
 			});
-		});
-
-		describe('test revoke', function () {
-			/**
-			 * @type {{name: string, storage: Entry[]}}
-			 */
-			it('should pass basic case', function () {
-				revoke(s, 'Foo', {Bar: ['whatever']});
-
-				expect(s.length).toBe(4);
-				expect(_.find(s, {target: Foo.name, source: 'Bar'})).not.toBeDefined();
-			});
-			it('should work with multiple permissions', function () {
-				revoke(s, 'Bar', {Foo: ['anything'], Baz: ['something else']});
-
-				expect(s.length).toBe(3);
-				expect(_.find(s, {target: 'Bar', source: Foo.name}).permissions[0]).toBe('whatever');
-				expect(_.find(s, {target: 'Bar', source: 'Baz'})).not.toBeDefined();
-			});
-			it('should work with multiple permission rules', function () {
-				revoke(s, ['Bar', 'Baz', 'Qux'], {Foo: ['whatever']});
-
-				expect(s.length).toBe(0);
-			});
-		});
-	});
+		}
+	);
 }());
