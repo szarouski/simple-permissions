@@ -1,4 +1,4 @@
-/*! simple-permissions - v5.0.0 - 2016-03-26
+/*! simple-permissions - v5.0.1 - 2016-03-26
 * https://github.com/szarouski/simple-permissions
  Licensed Unlicense
 * Description Trivial permissions implementation - takes an array and stores permissions from multiple targets for sources. 100% tested.
